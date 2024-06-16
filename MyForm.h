@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <cmath>
 #include <cstdlib>
@@ -19,13 +19,12 @@ namespace WinFormsGraph {
         MyForm(void)
         {
             InitializeComponent();
-            // Set the random seed
             srand(time(0));
 
-            // Initialize selectedVertex to -1
+            // Инициализировать selectedVertex значением -1
             selectedVertex = -1;
 
-            // Add the click event handler for the addDot button
+            // Добавить обработчик события нажатия для кнопки addDot
             this->addDot->Click += gcnew System::EventHandler(this, &MyForm::addDot_Click);
             this->graphBox->MouseClick += gcnew System::Windows::Forms::MouseEventHandler(this, &MyForm::graphBox_MouseClick);
         }
@@ -81,7 +80,7 @@ namespace WinFormsGraph {
                this->label1->Name = L"label1";
                this->label1->Size = System::Drawing::Size(430, 38);
                this->label1->TabIndex = 0;
-               this->label1->Text = L"������� ��������� �����";
+               this->label1->Text = L"Матрица смежности графа";
                // 
                // addDot
                // 
@@ -90,7 +89,7 @@ namespace WinFormsGraph {
                this->addDot->Name = L"addDot";
                this->addDot->Size = System::Drawing::Size(475, 95);
                this->addDot->TabIndex = 2;
-               this->addDot->Text = L"�������� �������";
+               this->addDot->Text = L"Добавить вершину";
                this->addDot->UseVisualStyleBackColor = true;
                // 
                // graphBox
@@ -117,7 +116,7 @@ namespace WinFormsGraph {
                this->buttonCreate->Name = L"buttonCreate";
                this->buttonCreate->Size = System::Drawing::Size(220, 65);
                this->buttonCreate->TabIndex = 7;
-               this->buttonCreate->Text = L"����";
+               this->buttonCreate->Text = L"Граф";
                this->buttonCreate->UseVisualStyleBackColor = true;
                this->buttonCreate->Click += gcnew System::EventHandler(this, &MyForm::buttonCreate_Click);
                // 
@@ -148,7 +147,7 @@ namespace WinFormsGraph {
                this->richTextBox1->ScrollBars = System::Windows::Forms::RichTextBoxScrollBars::None;
                this->richTextBox1->Size = System::Drawing::Size(878, 96);
                this->richTextBox1->TabIndex = 10;
-               this->richTextBox1->Text = L"��� ���������� ����� �������� ����� �������, ������� ��� ������ ���������";
+               this->richTextBox1->Text = L"Для добавления ребра щёлкните мышью вершины, которые оно должно соединить";
                // 
                // richTextBox2
                // 
@@ -163,7 +162,7 @@ namespace WinFormsGraph {
                this->richTextBox2->ScrollBars = System::Windows::Forms::RichTextBoxScrollBars::None;
                this->richTextBox2->Size = System::Drawing::Size(220, 158);
                this->richTextBox2->TabIndex = 11;
-               this->richTextBox2->Text = L"����� ������ ����� (n)";
+               this->richTextBox2->Text = L"Число вершин графа (n)";
                // 
                // matrixBox
                // 
@@ -194,7 +193,7 @@ namespace WinFormsGraph {
                this->MaximumSize = System::Drawing::Size(1780, 1020);
                this->MinimumSize = System::Drawing::Size(1780, 1020);
                this->Name = L"MyForm";
-               this->Text = L"������� ��������� �����";
+               this->Text = L"Матрица смежности графа";
                (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->graphBox))->EndInit();
                this->ResumeLayout(false);
                this->PerformLayout();
@@ -205,20 +204,20 @@ namespace WinFormsGraph {
     private:
         void buttonCreate_Click(System::Object^ sender, System::EventArgs^ e) {
             if (String::IsNullOrEmpty(amountOfDots->Text)) {
-                MessageBox::Show("����������, ������� ���������� ������.");
+                MessageBox::Show("Пожалуйста, введите количество вершин.");
                 return;
             }
 
             int n = Convert::ToInt32(amountOfDots->Text);
             if (n < 1 || n > 20) {
-                MessageBox::Show("������� ����� ������ � �������� �� 1 �� 20.");
+                MessageBox::Show("Введите число вершин в пределах от 1 до 20.");
                 return;
             }
             GenerateGraph(n);
         }
 
         void addDot_Click(System::Object^ sender, System::EventArgs^ e) {
-            // Increment the amount of dots
+            // Увеличить количество вершин
             int n;
             if (amountOfDots->Text == "") {
                 n = 0;
@@ -226,18 +225,18 @@ namespace WinFormsGraph {
             else {
                 n = Convert::ToInt32(amountOfDots->Text);
             }
-            if (n < 20) { // Limit the number of vertices to 20
+            if (n < 20) { // Ограничить количество вершин до 20
                 n++;
                 amountOfDots->Text = n.ToString();
                 GenerateGraph(n);
             }
             else {
-                MessageBox::Show("������������ ���������� ������ - 20.");
+                MessageBox::Show("Максимальное количество вершин - 20.");
             }
         }
 
         void GenerateGraph(int n) {
-            // Generate adjacency matrix
+            // Генерация матрицы смежности
             adjacencyMatrix = gcnew array<array<int>^>(n);
             for (int i = 0; i < n; i++) {
                 adjacencyMatrix[i] = gcnew array<int>(n);
@@ -251,14 +250,14 @@ namespace WinFormsGraph {
                 }
             }
 
-            // Make the matrix symmetric
+            // Сделать матрицу симметричной
             for (int i = 0; i < n; i++) {
                 for (int j = i + 1; j < n; j++) {
                     adjacencyMatrix[j][i] = adjacencyMatrix[i][j];
                 }
             }
 
-            // Display the adjacency matrix with highlighted ones
+            // Отобразить матрицу смежности с выделенными единицами
             matrixBox->Clear();
             matrixBox->SelectionStart = matrixBox->Text->Length;
             matrixBox->SelectionLength = 0;
@@ -275,7 +274,7 @@ namespace WinFormsGraph {
                 matrixBox->AppendText("\r\n");
             }
 
-            // Draw the graph
+            // Нарисовать граф
             DrawGraph(adjacencyMatrix, n);
         }
 
@@ -285,7 +284,7 @@ namespace WinFormsGraph {
             Pen^ pen = gcnew Pen(Color::Green);
             Brush^ brush = gcnew SolidBrush(Color::Yellow);
             Brush^ textBrush = gcnew SolidBrush(Color::Black);
-            int R = 200; // Radius
+            int R = 200; // Радиус
             Point center(graphBox->Width / 2, graphBox->Height / 2);
             points = gcnew array<Point>(n);
 
@@ -294,9 +293,9 @@ namespace WinFormsGraph {
                 int x = center.X + (int)(R * Math::Cos(angle));
                 int y = center.Y + (int)(R * Math::Sin(angle));
                 points[i] = Point(x, y);
-                g->FillEllipse(brush, x - 10, y - 10, 20, 20); // Fill the circle with yellow color
-                g->DrawEllipse(pen, x - 10, y - 10, 20, 20); // Draw the circle border
-                g->DrawString((i + 1).ToString(), gcnew System::Drawing::Font("Arial", 12), textBrush, x + 10, y - 10); // Draw the number
+                g->FillEllipse(brush, x - 10, y - 10, 20, 20); // Заполнить круг жёлтым цветом
+                g->DrawEllipse(pen, x - 10, y - 10, 20, 20); // Нарисовать границу круга
+                g->DrawString((i + 1).ToString(), gcnew System::Drawing::Font("Arial", 12), textBrush, x + 10, y - 10); // Нарисовать номер
             }
 
             for (int i = 0; i < n; i++) {
@@ -312,43 +311,43 @@ namespace WinFormsGraph {
             if (points == nullptr || points->Length == 0)
                 return;
 
-            // Determine if a vertex was clicked
+            // Определить, была ли кликнута вершина
             int clickedVertex = -1;
             for (int i = 0; i < points->Length; i++) {
-                if (Math::Pow(e->X - points[i].X, 2) + Math::Pow(e->Y - points[i].Y, 2) <= 100) { // 100 is the radius threshold for clicking a vertex
+                if (Math::Pow(e->X - points[i].X, 2) + Math::Pow(e->Y - points[i].Y, 2) <= 100) { // 100 - это порог радиуса для клика на вершину
                     clickedVertex = i;
                     break;
                 }
             }
 
             if (clickedVertex == -1)
-                return; // No vertex was clicked
+                return; // Ни одна вершина не была кликнута
 
             if (selectedVertex == -1) {
-                selectedVertex = clickedVertex; // First vertex selected
+                selectedVertex = clickedVertex; // Первая вершина выбрана
             }
             else {
-                // Add an edge between selectedVertex and clickedVertex
+                // Добавить ребро между selectedVertex и clickedVertex
                 adjacencyMatrix[selectedVertex][clickedVertex] = 1;
                 adjacencyMatrix[clickedVertex][selectedVertex] = 1;
 
-                // Update the graph display
+                // Обновить отображение графа
                 Graphics^ g = graphBox->CreateGraphics();
                 Pen^ pen = gcnew Pen(Color::Green);
                 g->DrawLine(pen, points[selectedVertex], points[clickedVertex]);
 
-                // Store the last vertices connected
+                // Сохранить последние соединённые вершины
                 lastVertex1 = selectedVertex;
                 lastVertex2 = clickedVertex;
 
-                // Update boxLast_1 and boxLast_2
+                // Обновить boxLast_1 и boxLast_2
                 boxLast_1->Text = (lastVertex1 + 1).ToString();
                 boxLast_2->Text = (lastVertex2 + 1).ToString();
 
-                // Reset selectedVertex
+                // Сбросить selectedVertex
                 selectedVertex = -1;
 
-                // Update the adjacency matrix display
+                // Обновить отображение матрицы смежности
                 matrixBox->Clear();
                 matrixBox->SelectionStart = matrixBox->Text->Length;
                 matrixBox->SelectionLength = 0;
