@@ -68,6 +68,7 @@ namespace WinFormsGraph {
            array<Point>^ points;
            int selectedVertex;
            int lastVertex1;
+    private: System::Windows::Forms::RichTextBox^ richTextBox3;
            int lastVertex2;
 
 #pragma region Windows Form Designer generated code
@@ -83,6 +84,7 @@ namespace WinFormsGraph {
                this->richTextBox1 = (gcnew System::Windows::Forms::RichTextBox());
                this->richTextBox2 = (gcnew System::Windows::Forms::RichTextBox());
                this->matrixBox = (gcnew System::Windows::Forms::RichTextBox());
+               this->richTextBox3 = (gcnew System::Windows::Forms::RichTextBox());
                (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->graphBox))->BeginInit();
                this->SuspendLayout();
                // 
@@ -90,7 +92,7 @@ namespace WinFormsGraph {
                // 
                this->label1->AutoSize = true;
                this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14));
-               this->label1->Location = System::Drawing::Point(66, 24);
+               this->label1->Location = System::Drawing::Point(28, 9);
                this->label1->Name = L"label1";
                this->label1->Size = System::Drawing::Size(430, 38);
                this->label1->TabIndex = 0;
@@ -99,18 +101,18 @@ namespace WinFormsGraph {
                // addDot
                // 
                this->addDot->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14));
-               this->addDot->Location = System::Drawing::Point(48, 846);
+               this->addDot->Location = System::Drawing::Point(19, 481);
                this->addDot->Name = L"addDot";
-               this->addDot->Size = System::Drawing::Size(475, 95);
+               this->addDot->Size = System::Drawing::Size(268, 39);
                this->addDot->TabIndex = 2;
                this->addDot->Text = L"Добавить вершину";
                this->addDot->UseVisualStyleBackColor = true;
                // 
                // graphBox
                // 
-               this->graphBox->Location = System::Drawing::Point(586, 24);
+               this->graphBox->Location = System::Drawing::Point(323, 50);
                this->graphBox->Name = L"graphBox";
-               this->graphBox->Size = System::Drawing::Size(878, 798);
+               this->graphBox->Size = System::Drawing::Size(440, 425);
                this->graphBox->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
                this->graphBox->TabIndex = 3;
                this->graphBox->TabStop = false;
@@ -118,36 +120,38 @@ namespace WinFormsGraph {
                // amountOfDots
                // 
                this->amountOfDots->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14));
-               this->amountOfDots->Location = System::Drawing::Point(1510, 188);
+               this->amountOfDots->Location = System::Drawing::Point(783, 72);
                this->amountOfDots->Name = L"amountOfDots";
-               this->amountOfDots->Size = System::Drawing::Size(220, 44);
+               this->amountOfDots->Size = System::Drawing::Size(140, 44);
                this->amountOfDots->TabIndex = 6;
                // 
                // buttonCreate
                // 
                this->buttonCreate->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14));
-               this->buttonCreate->Location = System::Drawing::Point(1510, 248);
+               this->buttonCreate->Location = System::Drawing::Point(783, 110);
                this->buttonCreate->Name = L"buttonCreate";
-               this->buttonCreate->Size = System::Drawing::Size(220, 65);
+               this->buttonCreate->Size = System::Drawing::Size(140, 33);
                this->buttonCreate->TabIndex = 7;
-               this->buttonCreate->Text = L"Граф";
+               this->buttonCreate->Text = L"Построить";
                this->buttonCreate->UseVisualStyleBackColor = true;
                this->buttonCreate->Click += gcnew System::EventHandler(this, &MyForm::buttonCreate_Click);
                // 
                // boxLast_1
                // 
-               this->boxLast_1->Location = System::Drawing::Point(1510, 762);
+               this->boxLast_1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14));
+               this->boxLast_1->Location = System::Drawing::Point(783, 426);
                this->boxLast_1->Multiline = true;
                this->boxLast_1->Name = L"boxLast_1";
-               this->boxLast_1->Size = System::Drawing::Size(99, 60);
+               this->boxLast_1->Size = System::Drawing::Size(50, 34);
                this->boxLast_1->TabIndex = 8;
                // 
                // boxLast_2
                // 
-               this->boxLast_2->Location = System::Drawing::Point(1628, 762);
+               this->boxLast_2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14));
+               this->boxLast_2->Location = System::Drawing::Point(865, 426);
                this->boxLast_2->Multiline = true;
                this->boxLast_2->Name = L"boxLast_2";
-               this->boxLast_2->Size = System::Drawing::Size(102, 60);
+               this->boxLast_2->Size = System::Drawing::Size(58, 34);
                this->boxLast_2->TabIndex = 9;
                // 
                // richTextBox1
@@ -155,11 +159,11 @@ namespace WinFormsGraph {
                this->richTextBox1->BackColor = System::Drawing::Color::White;
                this->richTextBox1->BorderStyle = System::Windows::Forms::BorderStyle::None;
                this->richTextBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14));
-               this->richTextBox1->Location = System::Drawing::Point(586, 846);
+               this->richTextBox1->Location = System::Drawing::Point(323, 481);
                this->richTextBox1->Name = L"richTextBox1";
                this->richTextBox1->ReadOnly = true;
                this->richTextBox1->ScrollBars = System::Windows::Forms::RichTextBoxScrollBars::None;
-               this->richTextBox1->Size = System::Drawing::Size(878, 96);
+               this->richTextBox1->Size = System::Drawing::Size(523, 63);
                this->richTextBox1->TabIndex = 10;
                this->richTextBox1->Text = L"Для добавления ребра щёлкните мышью вершины, которые оно должно соединить";
                // 
@@ -168,30 +172,46 @@ namespace WinFormsGraph {
                this->richTextBox2->BackColor = System::Drawing::Color::White;
                this->richTextBox2->BorderStyle = System::Windows::Forms::BorderStyle::None;
                this->richTextBox2->Cursor = System::Windows::Forms::Cursors::Default;
-               this->richTextBox2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+               this->richTextBox2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
                    static_cast<System::Byte>(204)));
-               this->richTextBox2->Location = System::Drawing::Point(1510, 24);
+               this->richTextBox2->Location = System::Drawing::Point(780, 9);
                this->richTextBox2->Name = L"richTextBox2";
                this->richTextBox2->ReadOnly = true;
                this->richTextBox2->ScrollBars = System::Windows::Forms::RichTextBoxScrollBars::None;
-               this->richTextBox2->Size = System::Drawing::Size(220, 158);
+               this->richTextBox2->Size = System::Drawing::Size(178, 95);
                this->richTextBox2->TabIndex = 11;
                this->richTextBox2->Text = L"Число вершин графа (n)";
                // 
                // matrixBox
                // 
-               this->matrixBox->Location = System::Drawing::Point(48, 77);
+               this->matrixBox->Location = System::Drawing::Point(19, 50);
                this->matrixBox->Name = L"matrixBox";
-               this->matrixBox->Size = System::Drawing::Size(475, 1301);
+               this->matrixBox->Size = System::Drawing::Size(268, 425);
                this->matrixBox->TabIndex = 12;
                this->matrixBox->Text = L"";
                // 
+               // richTextBox3
+               // 
+               this->richTextBox3->BackColor = System::Drawing::Color::White;
+               this->richTextBox3->BorderStyle = System::Windows::Forms::BorderStyle::None;
+               this->richTextBox3->Cursor = System::Windows::Forms::Cursors::Default;
+               this->richTextBox3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+                   static_cast<System::Byte>(204)));
+               this->richTextBox3->Location = System::Drawing::Point(780, 373);
+               this->richTextBox3->Name = L"richTextBox3";
+               this->richTextBox3->ReadOnly = true;
+               this->richTextBox3->ScrollBars = System::Windows::Forms::RichTextBoxScrollBars::None;
+               this->richTextBox3->Size = System::Drawing::Size(143, 47);
+               this->richTextBox3->TabIndex = 13;
+               this->richTextBox3->Text = L"Соединенные точки:";
+               // 
                // MyForm
                // 
-               this->AutoScaleDimensions = System::Drawing::SizeF(168, 168);
-               this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Dpi;
+               this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
                this->BackColor = System::Drawing::SystemColors::ButtonHighlight;
-               this->ClientSize = System::Drawing::Size(1756, 956);
+               this->ClientSize = System::Drawing::Size(935, 546);
+               this->Controls->Add(this->richTextBox3);
+               this->Controls->Add(this->amountOfDots);
                this->Controls->Add(this->addDot);
                this->Controls->Add(this->matrixBox);
                this->Controls->Add(this->richTextBox2);
@@ -199,13 +219,10 @@ namespace WinFormsGraph {
                this->Controls->Add(this->boxLast_2);
                this->Controls->Add(this->boxLast_1);
                this->Controls->Add(this->buttonCreate);
-               this->Controls->Add(this->amountOfDots);
                this->Controls->Add(this->graphBox);
                this->Controls->Add(this->label1);
                this->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
                this->ForeColor = System::Drawing::SystemColors::Desktop;
-               this->MaximumSize = System::Drawing::Size(1780, 1020);
-               this->MinimumSize = System::Drawing::Size(1780, 1020);
                this->Name = L"MyForm";
                this->Text = L"Матрица смежности графа";
                (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->graphBox))->EndInit();
