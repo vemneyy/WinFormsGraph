@@ -358,7 +358,7 @@ namespace WinFormsGraph {
                 selectedVertex = clickedVertex; // Первая выбранная вершина
             }
             else {
-                // Check if the same vertex is not selected
+                // Проверка, не выбрана ли одна и та же вершина
                 if (selectedVertex != clickedVertex) {
                     // Добавление ребро между выбранной вершиной и clickedVertex
                     adjacencyMatrix[selectedVertex][clickedVertex] = 1;
